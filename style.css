@@ -1,0 +1,93 @@
+/* Dark background for entire page */
+body {
+  font-family: Arial, sans-serif;
+  max-width: 750px;
+  margin: 40px auto;
+  padding: 20px;
+
+  background-color: #121212;
+  color: #f0f0f0;
+}
+
+/* Title */
+h1 {
+  text-align: center;
+  color: #ffffff;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: #1f1f1f;
+}
+
+th, td {
+  border: 1px solid #333;
+  padding: 10px;
+  text-align: center;
+}
+
+/* Inputs */
+input[type="text"], input[type="number"] {
+  width: 90%;
+  padding: 5px;
+  background: #2b2b2b;
+  color: #fff;
+  border: 1px solid #555;
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 15px;
+  margin-top: 10px;
+  cursor: pointer;
+  border: none;
+  font-weight: bold;
+  transition: 0.2s ease;
+}
+
+/* Add Item Button */
+#addItemBtn {
+  background: #4CAF50;
+  color: white;
+}
+
+#addItemBtn:hover {
+  background: #45a049;
+  transform: scale(1.05);
+}
+
+/* Discount Button */
+#discountBtn {
+  background: #2196F3;
+  color: white;
+}
+
+#discountBtn:hover {
+  background: #1e88e5;
+  transform: scale(1.05);
+}
+
+/* Remove Button (Red with icon) */
+.removeBtn {
+  background: #d9534f;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.2s ease;
+  border-radius: 4px;
+}
+
+.removeBtn:hover {
+  background: #c9302c;
+  transform: scale(1.1);
+}
+
+/* Icon spacing */
+.icon {
+  margin-right: 6px;
+}

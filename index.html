@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Restaurant Menu Calculator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>Restaurant Menu</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Item Name</th>
+      <th>Price ($)</th>
+      <th>Qty</th>
+      <th>Remove</th>
+    </tr>
+  </thead>
+
+  <tbody id="menuItems">
+  </tbody>
+</table>
+
+<button id="addItemBtn" class="btn">
+  <span class="icon">➕</span>Add Menu Item
+</button>
+
+<h2>Subtotal: $<span id="subtotal">0.00</span></h2>
+
+<label>Tax Rate (%):</label>
+<input type="number" id="taxRate" step="0.01" placeholder="8.875">
+
+<h2>Tax: $<span id="taxAmount">0.00</span></h2>
+
+<label>Gratuity Tip (%):</label>
+<input type="number" id="tipRate" step="0.01" placeholder="15">
+
+<h2>Tip: $<span id="tipAmount">0.00</span></h2>
+
+<label>Discount Amount ($):</label>
+<input type="number" id="discountValue" step="0.01">
+
+<button id="discountBtn" class="btn">Apply Discount</button>
+
+<h2>Total: $<span id="total">0.00</span></h2>
+
+<script>
+  function calculateTotals() {
+    let rows = document.querySelectorAll("#menuItems tr");
+    let subtotal = 0;
+
+    rows.forEach(row => {
+      let price = parseFloat(row.querySelector(".item-price").value) || 0;
+      let qty = parseInt(row.querySelector(".item-qty").value) || 0;
+      subtotal += price * qty;
+    });
+
+    document.getElementById("subtotal").textContent = subtotal.toFixed(2);
+
+    // Tax
+    let taxRate = parseFloat(document.getElementById("taxRate").value) || 0;
+    let taxAmount = subtotal * (taxRate / 100);
+    document.getElementById("taxAmount").textContent = taxAmount.toFixed(2);
+
+    // ⭐ Tip (calculated AFTER tax)
+    let tipRate = parseFloat(document.getElementById("tipRate").value) || 0;
+    let tipAmount = (subtotal + taxAmount) * (tipRate / 100);
+    document.getElementById("tipAmount").textContent = tipAmount.toFixed(2);
+
+    // Discount
+    let discount = parseFloat(document.getElementById("discountValue").value) || 0;
+
+    // Final total
+    let total = subtotal + taxAmount + tipAmount - discount;
+    if (total < 0) total = 0;
+
+    document.getElementById("total").textContent = total.toFixed(2);
+  }
+
+  document.getElementById("addItemBtn").addEventListener("click", () => {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td><input type="text" class="item-name" placeholder="Enter item name"></td>
+      <td><input type="number" class="item-price" step="0.01" placeholder="0.00"></td>
+      <td><input type="number" class="item-qty" min="1" value="1"></td>
+      <td><button class="removeBtn"><span class="icon">🗑️</span></button></td>
+    `;
+
+    document.getElementById("menuItems").appendChild(row);
+
+    row.querySelector(".item-price").addEventListener("input", calculateTotals);
+    row.querySelector(".item-qty").addEventListener("input", calculateTotals);
+
+    row.querySelector(".removeBtn").addEventListener("click", () => {
+      row.remove();
+      calculateTotals();
+    });
+  });
+
+  document.getElementById("discountBtn").addEventListener("click", calculateTotals);
+  document.getElementById("taxRate").addEventListener("input", calculateTotals);
+
+  
+  document.getElementById("tipRate").addEventListener("input", calculateTotals);
+</script>
+
+</body>
+</html>
